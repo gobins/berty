@@ -24,6 +24,7 @@ $(GEN_SUM): $(GEN_SRC)
 	  docker run \
 	    --user=`id -u` \
 	    --volume="$(PWD)/..:/go/src/berty.tech/berty" \
+	    --volume="`go env GOMODCACHE`:/go/pkg/mod" \
 	    --workdir="/go/src/berty.tech/berty/docs" \
 	    --entrypoint="sh" \
 	    --rm \
@@ -31,7 +32,7 @@ $(GEN_SUM): $(GEN_SRC)
 	    -xec 'make generate_local' \
 	)
 
-PROTOC_OPTS = -I ../vendor/github.com/grpc-ecosystem/grpc-gateway:../api:../vendor:/protobuf
+PROTOC_OPTS = -I ../api:`go list -m -f {{.Dir}} github.com/grpc-ecosystem/grpc-gateway`/third_party/googleapis:`go list -m -f {{.Dir}} github.com/gogo/protobuf`:/protobuf
 .PHONY: generate_local
 generate_local:
 	protoc $(PROTOC_OPTS) --doc_out=./protocol  --doc_opt=markdown,api.md.tmp ../api/bertyprotocol.proto ../api/bertytypes.proto
