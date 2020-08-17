@@ -33,7 +33,7 @@ install: go.install
 
 .PHONY: clean
 clean:
-	rm -rf vendor/ out/
+	rm -rf out/
 
 .PHONY: mini.dev
 mini.dev: generate
