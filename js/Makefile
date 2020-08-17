@@ -357,11 +357,11 @@ packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src) ../vendor
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/ios/Frameworks"
-	GO111MODULE=off gomobile bind -o $@ -v $(ext_ldflags) -target ios berty.tech/berty/go/framework/bertybridge
+	GO111MODULE=on gomobile bind -o $@ -v $(ext_ldflags) -target ios berty.tech/berty/go/framework/bertybridge
 	touch "packages/go-bridge/ios/Frameworks"
 
 packages/go-bridge/android/libs/gobridge.aar: $(bridge_src) ../vendor
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/android/libs"
-	GO111MODULE=off gomobile bind -o $@ -v $(ext_ldflags) -target android berty.tech/berty/go/framework/bertybridge
+	GO111MODULE=on gomobile bind -o $@ -v $(ext_ldflags) -target android berty.tech/berty/go/framework/bertybridge
