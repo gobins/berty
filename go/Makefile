@@ -110,7 +110,7 @@ $(gen_sum): $(gen_src)
 	@diff -q $(gen_sum).tmp $(gen_sum) || ( \
 	  uid=`id -u`; \
 	  set -xe; \
-	  $(GO) mod vendor; \
+	  $(GO) mod download; \
 	  docker run \
 	    --user="$$uid" \
 	    --volume="$(PWD)/..:/go/src/berty.tech/berty" \

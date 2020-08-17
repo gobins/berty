@@ -316,7 +316,7 @@ tidy:
 ## file-based rules
 
 ../vendor: ../go.mod ../go.sum
-	cd .. && GO111MODULE=on go mod vendor
+	cd .. && GO111MODULE=on go mod download
 
 ../vendor/github.com/gogo/protobuf/gogoproto/gogo.proto: ../vendor
 
