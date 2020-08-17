@@ -353,13 +353,15 @@ packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src)
 	(cd ..; GO111MODULE=on go mod download)
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
+	cd packages/go-bridge && go mod download
 	@mkdir -p "packages/go-bridge/ios/Frameworks"
-	GO111MODULE=on gomobile bind -o $@ -v $(ext_ldflags) -target ios berty.tech/berty/v2/go/framework/bertybridge
+	cd .. && GO111MODULE=on gomobile bind -o js/$@ -v $(ext_ldflags) -target ios ./go/framework/bertybridge
 	touch "packages/go-bridge/ios/Frameworks"
 
 packages/go-bridge/android/libs/gobridge.aar: $(bridge_src)
 	(cd ..; GO111MODULE=on go mod download)
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
+	cd packages/go-bridge && go mod download
 	@mkdir -p "packages/go-bridge/android/libs"
-	GO111MODULE=on gomobile bind -o $@ -v $(ext_ldflags) -target android berty.tech/berty/v2/go/framework/bertybridge
+	cd .. && GO111MODULE=on gomobile bind -o js/$@ -v $(ext_ldflags) -target android ./go/framework/bertybridge
