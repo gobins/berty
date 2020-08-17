@@ -273,7 +273,7 @@ protoc_target_dir := ../js/packages/store/protocol/grpc-web-gen
 protoc_opts := -I ../api:`cd ..; go list -m -f {{.Dir}} github.com/grpc-ecosystem/grpc-gateway`/third_party/googleapis:`cd ..; go list -m -f {{.Dir}} github.com/gogo/protobuf`:/protobuf
 .PHONY: _gen.protoc
 _gen.protoc:
-	pushd .. && GO111MODULE=on go mod download && popd
+	(cd ..; GO111MODULE=on go mod download)
 	docker run --rm --user="`id -u`" --entrypoint="sh" \
 	  --volume="`go env GOMODCACHE`:/go/pkg/mod" \
 	  --volume="$(PWD)/..:/go/src/berty.tech/berty" \
@@ -350,7 +350,7 @@ packages/berty-app/ios/Podfile:
 	touch $@
 
 packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src)
-	pushd .. && GO111MODULE=on go mod download && popd
+	(cd ..; GO111MODULE=on go mod download)
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/ios/Frameworks"
@@ -358,7 +358,7 @@ packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src)
 	touch "packages/go-bridge/ios/Frameworks"
 
 packages/go-bridge/android/libs/gobridge.aar: $(bridge_src)
-	pushd .. && GO111MODULE=on go mod download && popd
+	(cd ..; GO111MODULE=on go mod download)
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/android/libs"
