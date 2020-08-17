@@ -100,4 +100,5 @@ replace (
 	github.com/ipld/go-ipld-prime => github.com/ipld/go-ipld-prime v0.0.2-0.20191108012745-28a82f04c785 // specific version needed indirectly
 	github.com/ipld/go-ipld-prime-proto => github.com/ipld/go-ipld-prime-proto v0.0.0-20191113031812-e32bd156a1e5 // specific version needed indirectly
 	github.com/libp2p/go-libp2p-kbucket => github.com/libp2p/go-libp2p-kbucket v0.4.2 // specific version needed indirectly
+	github.com/marten-seemann/qtls => github.com/marten-seemann/qtls-go115 v0.0.0-20200813042125-f94d2ad9bd86 // see https://github.com/lucas-clemente/quic-go/issues/2614
 )
