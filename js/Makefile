@@ -272,7 +272,8 @@ protoc_src := ../api/bertytypes.proto ../api/bertyprotocol.proto ../api/bertymes
 protoc_target_dir := ../js/packages/store/protocol/grpc-web-gen
 protoc_opts := -I ../api:`cd ..; go list -m -f {{.Dir}} github.com/grpc-ecosystem/grpc-gateway`/third_party/googleapis:`cd ..; go list -m -f {{.Dir}} github.com/gogo/protobuf`:/protobuf
 .PHONY: _gen.protoc
-_gen.protoc: ../vendor
+_gen.protoc:
+	pushd .. && GO111MODULE=on go mod download && popd
 	docker run --rm --user="`id -u`" --entrypoint="sh" \
 	  --volume="`go env GOMODCACHE`:/go/pkg/mod" \
 	  --volume="$(PWD)/..:/go/src/berty.tech/berty" \
@@ -305,11 +306,6 @@ tidy:
 	cd packages/go-bridge && go mod tidy
 
 ## file-based rules
-
-../vendor: ../go.mod ../go.sum
-	cd .. && GO111MODULE=on go mod download
-
-../vendor/github.com/gogo/protobuf/gogoproto/gogo.proto: ../vendor
 
 $(pkg_mod): $(pkg_desc)
 	$(call check-program, yarn)
@@ -353,14 +349,16 @@ packages/berty-app/ios/Pods/Manifest.lock: packages/berty-app/ios/Podfile packag
 packages/berty-app/ios/Podfile:
 	touch $@
 
-packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src) ../vendor
+packages/go-bridge/ios/Frameworks/Bertybridge.framework: $(bridge_src)
+	pushd .. && GO111MODULE=on go mod download && popd
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/ios/Frameworks"
 	GO111MODULE=on gomobile bind -o $@ -v $(ext_ldflags) -target ios berty.tech/berty/v2/go/framework/bertybridge
 	touch "packages/go-bridge/ios/Frameworks"
 
-packages/go-bridge/android/libs/gobridge.aar: $(bridge_src) ../vendor
+packages/go-bridge/android/libs/gobridge.aar: $(bridge_src)
+	pushd .. && GO111MODULE=on go mod download && popd
 	cd packages/go-bridge && go install golang.org/x/mobile/cmd/gomobile
 	cd packages/go-bridge && gomobile init
 	@mkdir -p "packages/go-bridge/android/libs"
