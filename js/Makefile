@@ -284,7 +284,7 @@ _gen.protoc.local:
 	$(call check-program, protoc)
 	rm -fr $(protoc_target_dir)
 	mkdir -p $(protoc_target_dir)
-	protoc $(protoc_opts) --plugin=protoc-gen-ts=$(PWD)/node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:$(protoc_target_dir) --ts_out=service=grpc-web:$(protoc_target_dir) $(protoc_src)
+	protoc $(protoc_opts) --plugin=protoc-gen-ts=$(PWD)/node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:$(protoc_target_dir) --ts_out=service=grpc-web:$(protoc_target_dir) $(protoc_src) `cd ..; go list -m -f {{.Dir}} github.com/gogo/protobuf`/gogoproto/gogo.proto
 
 #### gen.sum
 
